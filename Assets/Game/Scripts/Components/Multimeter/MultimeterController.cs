@@ -1,15 +1,13 @@
 using UnityEngine;
 
-using Zenject;
-
 using MultimeterExample.Scripts.Patterns;
-using UnityEditor.Experimental.GraphView;
 
 namespace MultimeterExample.Scripts.Components
 {
     public class MultimeterController : MonoBehaviour, IController
     {
-        [Inject] private MultimeterModel _multimeterModel;
+        [SerializeField] private MultimeterModel _multimeterModel;
+        [SerializeField] private MultimeterView  _multimeterView;
         //
         [SerializeField] private GameObject _multimeterWheel;
         [SerializeField] private float      _multimeterStartingAngle = 90f;
@@ -23,8 +21,9 @@ namespace MultimeterExample.Scripts.Components
             //Vars
             _multimeterRotation = _multimeterStartingAngle;
 
-            //Model
+            //Multimeter
             _multimeterModel.Calculate();
+            _multimeterView.Display();
         }
 
         public void Update()
@@ -94,6 +93,9 @@ namespace MultimeterExample.Scripts.Components
             {
                 _multimeterModel.SetMode(MultimeterMode.Neutral);
             }
+
+            //Display
+            _multimeterView.Display();
         }
 
         public void On()
